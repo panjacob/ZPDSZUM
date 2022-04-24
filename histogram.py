@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 import os
 
-path = 'ZPD/Original_256x256'
+path = 'Images/All'
 files = os.listdir(path)
 
 colors = ("red", "green", "blue")
@@ -14,7 +14,9 @@ channel_ids = (0, 1, 2)
 plt.figure()
 plt.xlim([0, 256])
 histograms = np.zeros((3, 256), dtype=numpy.int64)
+files_len = len(files)
 for index, file in enumerate(files):
+    print(f"{index+1}/{files_len}")
     image = skimage.io.imread(os.path.join(path, file))
     for channel_id, c in zip(channel_ids, colors):
         histogram, bin_edges = np.histogram(image[:, :, channel_id], bins=256, range=(0, 256))

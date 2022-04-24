@@ -1,5 +1,5 @@
 import os
-path = 'ZPD/new'
+path = 'Images/new'
 files = os.listdir(path)
 
 start = 584
