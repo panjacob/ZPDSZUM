@@ -15,12 +15,12 @@ def crop_center(pil_img, crop_width=256, crop_height=256):
                          (img_height + crop_height) // 2))
 
 
-path = 'ZPD/Nowy'
+path = 'ZPD/new'
 new_path = path + '_256x256'
 Path(new_path).mkdir(parents=True, exist_ok=True)
 files = os.listdir(path)
 files_len = len(files)
-start = 466
+start = 584
 for i, file in enumerate(files):
     print(f"{i + 1}/{files_len}")
     image = Image.open(os.path.join(path, file))

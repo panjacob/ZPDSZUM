@@ -1,7 +1,7 @@
 import os
-path = 'ZPD/Nowy'
+path = 'ZPD/new'
 files = os.listdir(path)
 
-start = 466
+start = 584
 for index, file in enumerate(files):
     os.rename(os.path.join(path, file), os.path.join(path, ''.join([str(index + start), '.jpg'])))
