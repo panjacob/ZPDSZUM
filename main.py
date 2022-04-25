@@ -104,3 +104,4 @@ datagen = ImageDataGenerator(rescale=(1.0 / 255.0), featurewise_center=True, fea
 
 train_generator = datagen.flow_from_directory(train_dir)
 test_generator = datagen.flow_from_directory(test_dir)
+
