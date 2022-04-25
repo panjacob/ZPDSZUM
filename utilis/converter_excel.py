@@ -6,7 +6,7 @@ import csv
 types = ['hatchback', 'kombi', 'coupe', 'sedan', 'suv', 'minibus', 'mpv', 'others', 'n/a']
 brands = ['toyota', 'volkswagen', 'kia', 'seat', 'hyundai', 'peugeot', 'bmw', 'audi', 'skoda', 'honda', 'renault',
           'opel', 'volvo', 'mazda', 'nissan', 'mercedes', 'citroen', 'ford', 'fiat', 'others', 'n/a']
-classes = ['front', 'side', 'back', 'rear', 'others', 'problematic']
+classes = ['front', 'side', 'rear', 'others']
 colors = ['white', 'blackblue', 'silver', 'red', 'gray', 'orange', 'yellow', 'beige', 'others']
 
 

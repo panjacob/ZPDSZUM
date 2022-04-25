@@ -139,7 +139,10 @@ move_images_to_folders(train_dir, train_set)
 move_images_to_folders(test_dir, test_set)
 move_images_to_folders(validation_dir, validation_set)
 
-datagen = ImageDataGenerator(rescale=(1.0 / 255.0), featurewise_center=True, featurewise_std_normalization=True)
+datagen = ImageDataGenerator(
+    rescale=(1.0 / 255.0),
+    featurewise_center=True,
+    featurewise_std_normalization=True)
 
 train_generator = datagen.flow_from_directory(train_dir)
 test_generator = datagen.flow_from_directory(test_dir)
