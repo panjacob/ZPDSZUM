@@ -25,16 +25,24 @@ def read_csv(filename):
 def clean_data(data):
     result = []
     for x in data:
+        if 'type' not in x:
+            x['type'] = 'n/a'
+        if 'brand' not in x:
+            x['brand'] = 'n/a'
+        if 'color' not in x:
+            x['color'] = 'others'
+        if 'class' not in x:
+            x['class'] = 'others'
+
         if x['type'] not in types:
             x['type'] = 'n/a'
         if x['brand'] not in brands:
             x['brand'] = 'n/a'
         if x['class'] not in classes:
             x['class'] = 'others'
-        if x['class'] == 'n/a':
-            x['class'] = 'problematic'
         if x['color'] not in colors:
             x['color'] = 'others'
+        x['images'] = []
         result.append(x)
     return result
 
@@ -44,7 +52,7 @@ def save_json(data, path):
         json.dump(data, fp)
 
 
-data_raw = read_csv(os.path.join('files', 'classes.csv'))
+data_raw = read_csv(os.path.join('..', 'files', 'classes.csv'))
 data_clean = clean_data(data_raw)
 pprint(data_clean)
-save_json(data_clean, os.path.join('files', 'classes.json'))
+save_json(data_clean, os.path.join('..', 'files', 'classes.json'))
