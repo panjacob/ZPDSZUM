@@ -1,6 +1,6 @@
 import os
 
-from utilis.statistics import make_plots, save_model
+from utilis.statistics import make_plots, save_model, make_confusion_matrix
 from utilis.generator import get_generators
 from utilis.metrics import metrics
 from keras.models import Sequential
@@ -9,6 +9,7 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 
 RESULT_FILENAME = "Sequential_1"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
 test_model = "Sequential, steps=100, epoch=10, loss=binary_crossentropy, optimizer=rmsprop"  # Dodawany do wykresow
+LEARN_MODEL_TRUE_OR_LOAD_FALSE = True
 
 
 def get_model():
@@ -33,7 +34,7 @@ def get_model():
     model.add(Activation('sigmoid'))
 
     model.compile(
-        loss='binary_crossentropy',
+        loss='categorical_crossentropy',
         optimizer='rmsprop',
         metrics=metrics
     )
@@ -41,14 +42,24 @@ def get_model():
 
 
 train_generator, test_generator = get_generators(dataset_name="Data_08", train_size=0.8)
-model = get_model()
-history = model.fit_generator(
-    train_generator,
-    steps_per_epoch=100,  # 1000
-    epochs=10,  # 100
-    validation_data=test_generator,
-    validation_steps=100  # 8000
-)
 destination_path = os.path.join('files', 'results', RESULT_FILENAME)
-make_plots(history.history, test_model, destination_path)
-save_model(model, destination_path)
+model = get_model()
+if LEARN_MODEL_TRUE_OR_LOAD_FALSE:
+    history = model.fit_generator(
+        train_generator,
+        steps_per_epoch=100,  # 1000
+        epochs=10,  # 100
+        validation_data=test_generator,
+        validation_steps=100  # 8000
+    )
+
+    make_plots(history.history, test_model, destination_path)
+    make_confusion_matrix(model, test_generator, destination_path)
+    save_model(model, destination_path)
+else:
+
+    model_path = os.path.join(destination_path, 'model.h5')
+    print(model_path)
+    print(os.listdir(destination_path))
+    # model = keras.models.load_model(model_path)
+    model.load_weights(model_path)

@@ -1,3 +1,4 @@
+from tensorflow import keras
 from tensorflow.keras import metrics
 from keras import backend as K
 
@@ -16,4 +17,6 @@ metrics = [
     'accuracy',
     metrics.AUC(name='AUC_ROC', curve="ROC"),
     f_score,
+    #     Dodatkowe 5
+    'kullback_leibler_divergence'
 ]
