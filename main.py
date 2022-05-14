@@ -7,8 +7,8 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 
-RESULT_FILENAME = "test_model"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
-DESCRIPTION = "Sequential, steps=100, epoch=10, loss=binary_crossentropy, optimizer=rmsprop"  # Dodawany do wykresow
+RESULT_FILENAME = "Sequential_1"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
+test_model = "Sequential, steps=100, epoch=10, loss=binary_crossentropy, optimizer=rmsprop"  # Dodawany do wykresow
 
 
 def get_model():
@@ -44,11 +44,11 @@ train_generator, test_generator = get_generators(dataset_name="Data_08", train_s
 model = get_model()
 history = model.fit_generator(
     train_generator,
-    steps_per_epoch=1,  # 1000
-    epochs=5,  # 100
+    steps_per_epoch=100,  # 1000
+    epochs=10,  # 100
     validation_data=test_generator,
-    validation_steps=1  # 8000
+    validation_steps=100  # 8000
 )
 destination_path = os.path.join('files', 'results', RESULT_FILENAME)
-make_plots(history.history,DESCRIPTION, destination_path)
+make_plots(history.history, test_model, destination_path)
 save_model(model, destination_path)
