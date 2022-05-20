@@ -27,28 +27,32 @@ def make_confusion_matrix(model, test_generator, destination):
 def make_plots(history, description, destination):
     create_path_if_doesnt_exist(destination)
     print(history)
-    make_plot(history['loss'], history['val_loss'], 'loss.png', 'loss', 'epoch', f"loss - {description}", destination)
-    make_plot(history['accuracy'], history['val_accuracy'], 'accuracy.png', 'accuracy', 'epoch',
-              f"accuracy - {description}", destination)
-    make_plot(history['f_score'], history['val_f_score'], 'f_score.png', 'f_score', 'epoch', f"f_score - {description}",
-              destination)
-    make_plot(history['AUC_ROC'], history['val_AUC_ROC'], 'AUC_ROC.png', 'AUC_ROC', 'epoch', f"AUC_ROC - {description}",
-              destination)
-    make_plot(history['kullback_leibler_divergence'], history['val_kullback_leibler_divergence'],
-              'kullback_leibler_divergence.png', 'kullback_leibler_divergence', 'epoch',
-              f"kullback_leibler_divergence - {description}",
-              destination)
+    make_plot(history, 'loss', description, destination)
+    make_plot(history, 'accuracy', description, destination)
+    make_plot(history, 'f_score', description, destination)
+    make_plot(history, 'AUC_ROC', description, destination)
+    # Dodatkowe
+    make_plot(history, 'kullback_leibler_divergence', description, destination)
+    make_plot(history, 'precision', description, destination)
+    make_plot(history, 'recall', description, destination)
+    make_plot(history, 'categorical_crossentropy', description, destination, ylim=None)
+    make_plot(history, 'poisson', description, destination, ylim=None)
 
 
-def make_plot(data1, data2, filename, ylabel, xlabel, title, destination):
+def make_plot(history, name, description, destination, ylim=[0, 1]):
+    data1 = history[name]
+    data2 = history[f"val_{name}"]
     plt.figure()
+    if ylim is not None:
+        plt.ylim(ylim)
     plt.plot(data1, label='training')
     plt.plot(data2, label='validation')
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.title("\n".join(wrap(title, 60)))
+    plt.xlabel('epoch')
+    plt.ylabel(name)
+    plt.title("\n".join(wrap(f"{name} - {description}", 60)))
     plt.legend()
-    plt.savefig(os.path.join(destination, filename))
+
+    plt.savefig(os.path.join(destination, f"{name}.png"))
 
 
 def save_model(model, destination):

@@ -6,9 +6,10 @@ from utilis.metrics import metrics
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
+import tensorflow as tf
 
 RESULT_FILENAME = "Sequential_1"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
-test_model = "Sequential, steps=100, epoch=10, loss=binary_crossentropy, optimizer=rmsprop"  # Dodawany do wykresow
+test_model = "Sequential, steps=100, epoch=10, loss=binary_crossentropy, optimizer=rmsprop "  # Dodawany do wykresow
 LEARN_MODEL_TRUE_OR_LOAD_FALSE = True
 
 
@@ -34,7 +35,11 @@ def get_model():
     model.add(Activation('sigmoid'))
 
     model.compile(
-        loss='categorical_crossentropy',
+        loss='binary_crossentropy',
+        # optimizer=tf.keras.optimizers.Ftrl(
+        #     l1_regularization_strength=0.001,
+        #     learning_rate=tf.keras.optimizers.schedules.ExponentialDecay(
+        #         initial_learning_rate=0.1, decay_steps=10000, decay_rate=0.9)),
         optimizer='rmsprop',
         metrics=metrics
     )
@@ -45,7 +50,7 @@ train_generator, test_generator = get_generators(dataset_name="Data_08", train_s
 destination_path = os.path.join('files', 'results', RESULT_FILENAME)
 model = get_model()
 if LEARN_MODEL_TRUE_OR_LOAD_FALSE:
-    history = model.fit_generator(
+    history = model.fit(
         train_generator,
         steps_per_epoch=100,  # 1000
         epochs=10,  # 100

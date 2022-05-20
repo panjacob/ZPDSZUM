@@ -15,8 +15,8 @@ def crop_center(pil_img, crop_width=256, crop_height=256):
                          (img_height + crop_height) // 2))
 
 
-path = 'ZPD/new'
-new_path = path + '_256x256'
+path = 'images/'
+new_path = path + 'All_64x64'
 Path(new_path).mkdir(parents=True, exist_ok=True)
 files = os.listdir(path)
 files_len = len(files)
