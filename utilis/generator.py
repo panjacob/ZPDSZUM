@@ -42,29 +42,36 @@ def get_generators(dataset_name, train_size, image_width=256):
     return train_generator, test_generator
 
 
-# def get_generators_128px(dataset_name, train_size):
-#     dataset_dir, train_dir, test_dir, is_created = create_directories_dataset(dataset_name)
-#     print(is_created)
-#     if is_created:
-#         print('Tworzenie nowego datasetu i zapisywanie go w pliku: ', dataset_dir)
-#         dataset = load_dataset()
-#         corelated = [(1, 20), (21, 83), (84, 92), (93, 114), (115, 209), (210, 227), (228, 262), (283, 366),
-#                      (420, 443), (444, 465)]
-#
-#         train_set, test_set = generate_datasets(dataset, corelated, train_size)
-#
-#         move_images_to_folders(train_dir, train_set)
-#         move_images_to_folders(test_dir, test_set)
-#
-#     datagen = ImageDataGenerator(
-#         rescale=(1.0 / 255.0),
-#         featurewise_center=False,
-#         featurewise_std_normalization=False,
-#
-#     )
-#
-#
-#     return train_generator, test_generator
+def get_generators_augumented(dataset_name, train_size, image_width=256):
+    dataset_dir, train_dir, test_dir, is_created = create_directories_dataset(dataset_name)
+    print(is_created)
+    if is_created:
+        print('Tworzenie nowego datasetu i zapisywanie go w pliku: ', dataset_dir)
+        dataset = load_dataset()
+        corelated = [(1, 20), (21, 83), (84, 92), (93, 114), (115, 209), (210, 227), (228, 262), (283, 366),
+                     (420, 443), (444, 465)]
+
+        train_set, test_set = generate_datasets(dataset, corelated, train_size)
+
+        move_images_to_folders(train_dir, train_set)
+        move_images_to_folders(test_dir, test_set)
+
+    datagen = ImageDataGenerator(
+        rescale=(1.0 / 255.0),
+        featurewise_center=False,
+        featurewise_std_normalization=False,
+        horizontal_flip=True,
+        rotation_range=20,
+        brightness_range=[0.6, 1.4],
+        zoom_range=[0.5, 1.0],
+    )
+
+    train_generator = datagen.flow_from_directory(train_dir)
+    test_generator = datagen.flow_from_directory(test_dir)
+    if image_width != 256:
+        train_generator = datagen.flow_from_directory(train_dir, target_size=(image_width, image_width))
+        test_generator = datagen.flow_from_directory(test_dir, target_size=(image_width, image_width))
+    return train_generator, test_generator
 
 
 def rl(a, b):
