@@ -1,7 +1,7 @@
 import os
 
 # from keras_applications.resnet_common import ResNet50V2
-from keras.applications.resnet_v2 import ResNet50V2
+from tensorflow.keras.applications.resnet_v2 import ResNet50V2
 from tensorflow.python.keras.layers import GlobalAveragePooling2D
 
 from utilis.statistics import make_plots, save_model, make_confusion_matrix
