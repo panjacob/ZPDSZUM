@@ -14,7 +14,7 @@ from tensorflow.keras import Model
 
 RESULT_FILENAME = "ResNet50V2_64px_remove"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
 test_model = "ResNet50V2_1_64px, steps=100, epoch=20, loss=sparse_categorical_crossentropy, optimizer=adam"  # Dodawany do wykresow
-LEARN_MODEL_TRUE_OR_LOAD_FALSE = False
+LEARN_MODEL_TRUE_OR_LOAD_FALSE = True
 
 
 def get_model():

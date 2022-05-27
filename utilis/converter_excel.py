@@ -52,7 +52,7 @@ def save_json(data, path):
         json.dump(data, fp)
 
 
-data_raw = read_csv(os.path.join('..', 'files', 'classes.csv'))
+data_raw = read_csv(os.path.dirname(__file__) + os.path.join('/..', 'files', 'classes.csv'))
 data_clean = clean_data(data_raw)
 pprint(data_clean)
-save_json(data_clean, os.path.join('..', 'files', 'classes.json'))
+save_json(data_clean, os.path.dirname(__file__) +  os.path.join('/..', 'files', 'classes.json'))
