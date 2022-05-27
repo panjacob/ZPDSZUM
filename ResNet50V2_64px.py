@@ -1,7 +1,7 @@
 import os
 
 # from keras_applications.resnet_common import ResNet50V2
-from keras.applications.resnet_v2 import ResNet50V2
+from tensorflow.keras.applications.resnet_v2 import ResNet50V2
 from tensorflow.python.keras.layers import GlobalAveragePooling2D
 
 from utilis.statistics import make_plots, save_model, make_confusion_matrix
@@ -14,7 +14,7 @@ from tensorflow.keras import Model
 
 RESULT_FILENAME = "ResNet50V2_64px_remove"  # nazwa pliku gdzie zostana zapisane wyniki w "files/results/{RESULT_FILENAME}"
 test_model = "ResNet50V2_1_64px, steps=100, epoch=20, loss=sparse_categorical_crossentropy, optimizer=adam"  # Dodawany do wykresow
-LEARN_MODEL_TRUE_OR_LOAD_FALSE = False
+LEARN_MODEL_TRUE_OR_LOAD_FALSE = True
 
 
 def get_model():
