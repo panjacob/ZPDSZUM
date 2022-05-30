@@ -8,6 +8,22 @@ from textwrap import wrap
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
+def get_wrong_classified(model, generator):
+    labels = [x for x in generator.class_indices]
+
+    y_test = generator.classes
+    y_pred_probabilites = model.predict(generator)
+    y_pred_classes = np.argmax(y_pred_probabilites, axis=1)
+    print(labels)
+
+    x = 0
+    for i in range(len(y_pred_classes)):
+        if y_test[i] != y_pred_classes[i]:
+            x += 1
+            # print(f"{i + 1}" + ".jpg")
+    print("zle", x, "/", len(y_pred_classes))
+
+
 def make_confusion_matrix(model, test_generator, destination):
     labels = [x for x in test_generator.class_indices]
     y_test = test_generator.classes
@@ -27,8 +43,13 @@ def make_confusion_matrix(model, test_generator, destination):
 def make_plots(history, description, destination):
     create_path_if_doesnt_exist(destination)
     print(history)
+    # W starszej wersji tensorflow jest acc
+    try:
+        make_plot(history, 'accuracy', description, destination)
+    except:
+        make_plot(history, 'acc', description, destination)
     make_plot(history, 'loss', description, destination)
-    make_plot(history, 'accuracy', description, destination)
+
     make_plot(history, 'f_score', description, destination)
     make_plot(history, 'AUC_ROC', description, destination)
     # Dodatkowe

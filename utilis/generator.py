@@ -5,11 +5,11 @@ from dataclasses import dataclass
 from pprint import pprint
 from random import random
 
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pathlib import Path
 
 import os
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 ALL_IMAGES_PATH = os.path.join('images', 'All')
 
@@ -58,12 +58,15 @@ def get_generators_augumented(dataset_name, train_size, image_width=256):
 
     datagen = ImageDataGenerator(
         rescale=(1.0 / 255.0),
-        featurewise_center=False,
-        featurewise_std_normalization=False,
+        shear_range=0.2,
+        height_shift_range=0.2,
+        width_shift_range=0.2,
+        vertical_flip=True,
         horizontal_flip=True,
         rotation_range=20,
         brightness_range=[0.6, 1.4],
-        zoom_range=[0.5, 1.0],
+        # channel_shift_range=40,
+        zoom_range=0.2,
     )
 
     train_generator = datagen.flow_from_directory(train_dir)
